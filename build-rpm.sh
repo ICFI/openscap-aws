@@ -9,7 +9,7 @@ set -e
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # SCAP Security Guide Version - https://github.com/OpenSCAP/scap-security-guide/releases/
-VERSION=0.1.37
+VERSION=0.1.38
 
 # Install rpm creation and validation utilities
 yum -y install rpm-build rpmlint
