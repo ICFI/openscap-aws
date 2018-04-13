@@ -70,5 +70,7 @@ install -m 0644 %{SOURCE1} %{buildroot}%{openscap_aws_home}/LICENSE.txt
 %{openscap_aws_home}/etc/scap-security-guide-%{version}
 
 %changelog
+* Fri Apr 13 2018 Andy Spohn <andy.spohn@icf.com> - 0.1.38
+- Updated OpenSCAP release version
 * Fri Jan 19 2018 Andy Spohn <andy.spohn@icf.com> - 0.1.37
 - First packaging
