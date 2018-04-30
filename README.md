@@ -7,6 +7,18 @@ any failures to an SNS topic. As the scan score is a percentage of pass/fail fin
 be applicable to your environment the use of a tailoring file to specify which failures have been accepted by your 
 organization makes this much more effective because then you can require that scans have a 100% score.
 
+### RPM Creation
+
+The project contains a Makefile which uses a CentOS 7 docker container to create the RPM
+
+Create the RPM
+
+    make
+    
+Clean up the artifacts
+
+    make clean
+
 ### Installation
 
 The RPM requires that the AWS CLI be installed but does not require that you do it using the official RPMs. If you 
