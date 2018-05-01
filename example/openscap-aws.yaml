@@ -13,6 +13,7 @@ Metadata:
         Parameters:
           - S3BucketName
           - ServerCount
+          - NotificationEmail
 
       - Label:
           default: 'Network Configuration'
@@ -27,6 +28,8 @@ Metadata:
         default: 'SSH Allowed IPs'
       EC2KeyPair:
         default: 'EC2 Key Pair Name'
+      NotificationEmail:
+        default: 'Notification Email'
       S3BucketName:
         default: 'S3 Bucket Name'
       ServerCount:
@@ -46,6 +49,11 @@ Parameters:
   EC2KeyPair:
     Description: 'SSH key pair'
     Type: AWS::EC2::KeyPair::KeyName
+
+  NotificationEmail:
+    Description: '(Optional) Email notifications of scan failures'
+    Type: String
+    Default: ''
 
   S3BucketName:
     Description: 'The name of an existing S3 bucket'
@@ -103,6 +111,13 @@ Mappings:
 
 Resources:
 
+  NotificationTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      Subscription:
+        - Endpoint: !Ref NotificationEmail
+          Protocol: email
+
   SecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -112,10 +127,6 @@ Resources:
         - IpProtocol: tcp
           FromPort: '22'
           ToPort: '22'
-          CidrIp: !Ref AllowedIPs
-        - IpProtocol: tcp
-          FromPort: '443'
-          ToPort: '443'
           CidrIp: !Ref AllowedIPs
 
   AutoScalingGroup:
@@ -144,20 +155,28 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/usr/bin/env bash
-          semanage port -m -t ssh_port_t -p tcp 443
-          sed -i 's/#Port 22/Port 22\nPort 443\n/g' /etc/ssh/sshd_config
-          systemctl restart sshd.service
 
           # We're installing the AWS CLI using an RPM from EPEL. Could also use pip if we wanted the latest version
           yum install -y epel-release
           yum install -y awscli
 
           # This is a quick but not ideal way of installing. An RPM repo with your custom packages would be better.
-          aws s3 cp s3://${S3BucketName}/openscap-aws-0.1.38-1.el7.centos.noarch.rpm /tmp
+          aws s3 sync s3://${S3BucketName} /tmp --exclude '*' --include '*.rpm'
           yum install -y /tmp/openscap-aws-*.rpm
+
+          # Update the default configuration file with the ARN of our SNS topic
+          sed -i "s/SNS_TOPIC_ARN=/SNS_TOPIC_ARN=${NotificationTopic}/" /opt/openscap-aws/etc/openscap-aws.conf
+
+          # Overwrite custom scan rules configuration with file uploaded to the S3 bucket
+          aws s3 sync s3://${S3BucketName} /opt/openscap-aws/etc --exclude '*' --include 'aws-cloud-tailored.xml'
 
           # You might want to schedule this differently, this randomizes scans throughout the day
           echo "$(shuf -i 0-59 -n 1) $(shuf -i 0-23 -n 1) * * * root /opt/openscap-aws/scan.sh" > /etc/cron.d/openscap-aws
+
+          # This is just for the demo, run a scan a few minutes after starting to populate the CloudWatch custom metric
+          yum -y install at
+          systemctl start atd
+          echo "/opt/openscap-aws/scan.sh" | at now + $(shuf -i 2-7 -n 1) min
 
   # ~~~ Allow servers to read from configuration S3 bucket and write to CloudWatch and SNS
 
@@ -187,9 +206,14 @@ Resources:
           PolicyDocument:
             Statement:
               - Effect: 'Allow'
-                Action:
-                  - 'cloudwatch:PutMetricData'
+                Action: 'cloudwatch:PutMetricData'
                 Resource: '*'
+        - PolicyName: 'PublishToSNS'
+          PolicyDocument:
+            Statement:
+              - Effect: 'Allow'
+                Action: 'SNS:Publish'
+                Resource: !Ref NotificationTopic
       AssumeRolePolicyDocument:
         Statement:
           - Effect: 'Allow'
