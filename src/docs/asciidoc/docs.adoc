@@ -1,0 +1,54 @@
+:imagesdir: images
+:stylesheet: stylesheets/style.css
+:source-highlighter: coderay
+:icons: font
+:toc: left
+
+= OpenSCAP AWS
+ifdef::backend-pdf[]
+:title-logo-image: image:logo.png[500, 500, align="center"]
+endif::backend-pdf[]
+
+ifdef::backend-html5[]
+image:logo.png[Logo, 150, 150, float="left"] +
+endif::backend-html5[]
+
+== Overview
+
+This project contains a bit of integration code that assists with managing OpenSCAP
+scans across a fleet of instances. The example integration contains an RPM built for CentOS 7 that will install OpenSCAP
+and all dependencies along with a https://www.open-scap.org/resources/documentation/customizing-scap-security-guide-for-your-use-case/[tailoring file]
+that allows you to adjust security policies the needs of your organization.
+
+== Building
+
+The project includes a Makefile that automates the creation of the RPM using a Docker container. Docker
+must be installed already on your machine.
+
+    make rpm
+
+== Deployment
+
+The RPM requires that the AWS CLI be installed but does not require that you do it using the official RPMs. If you
+don't have a preference then ensuring you have the EPEL repo configured and installing using commands like the following
+is the easiest method to install onto your servers.
+
+    yum -y install epel-release
+    yum -y install awscli openscap-aws
+
+=== Example
+
+There is a CloudFormation template in the examples directory that can be used to demonstrate the capability. It will
+create 3 EC2 micro sized instances which cost about a cent per hour.
+
+=== Setup
+
+Before deploying the CloudFormation template complete the following steps
+
+* Ensure you have both `make` and `docker` installed on your workstation
+* Create an S3 bucket to hold you custom tailoring file and the RPM
+  ** Accept all the defaults and keep the bucket permissions set to private
+* Run `make rpm` and upload the rpm file found in the src/rpm/RPMS/noarch directory
+  ** If you regularly manage your systems via RPM you might have a custom RPM repo already created into which you'd
+     add this RPM instead of uploading to your configuration S3 bucket
+* Review, update and upload the tailoring file located in the /src/rpm/SOURCES directory into the S3 bucket
