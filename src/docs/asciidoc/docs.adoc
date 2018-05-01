@@ -52,3 +52,10 @@ Before deploying the CloudFormation template complete the following steps
   ** If you regularly manage your systems via RPM you might have a custom RPM repo already created into which you'd
      add this RPM instead of uploading to your configuration S3 bucket
 * Review, update and upload the tailoring file located in the /src/rpm/SOURCES directory into the S3 bucket
+
+== Documentation Links
+
+ifdef::backend-html5[]
+=== icon:file-code-o[] https://icfi.github.io/openscap-aws/docs.html[Web^]
+=== icon:github[] https://github.com/ICFI/openscap-aws[Source^]
+endif::backend-html5[]
