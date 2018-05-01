@@ -13,7 +13,7 @@ The project contains a Makefile which uses a CentOS 7 docker container to create
 
 Create the RPM
 
-    make
+    make rpm
     
 Clean up the artifacts
 
