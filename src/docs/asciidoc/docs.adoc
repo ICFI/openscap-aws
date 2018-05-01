@@ -10,7 +10,7 @@ ifdef::backend-pdf[]
 endif::backend-pdf[]
 
 ifdef::backend-html5[]
-image:logo.png[Logo, 150, 150, float="left"] +
+image:logo.png[Logo, 150, 150, float="left", link="https://www.icf.com?utm_source=architecture&utm_medium=docs"] +
 endif::backend-html5[]
 
 == Overview
