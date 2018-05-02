@@ -1,4 +1,4 @@
-<img src="./images/project.svg">
+<img src="./docs/images/project.svg">
 
 * **Website**: https://icfi.github.io/openscap-aws/
 * **Docs**: https://icfi.github.io/openscap-aws/docs.html
