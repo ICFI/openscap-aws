@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>OpenSCAP AWS</title>
+<title>OpenSCAP on AWS</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400";
@@ -501,7 +501,7 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>OpenSCAP AWS</h1>
+<h1>OpenSCAP on AWS</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -515,7 +515,7 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#_documentation_links">Documentation Links</a>
 <ul class="sectlevel2">
-<li><a href="#_span_class_icon_i_class_fa_fa_file_code_o_i_span_a_href_https_icfi_github_io_openscap_aws_docs_html_target_blank_rel_noopener_web_a"><span class="icon"><i class="fa fa-file-code-o"></i></span> <a href="https://icfi.github.io/openscap-aws/docs.html" target="_blank" rel="noopener">Web</a></a></li>
+<li><a href="#_span_class_icon_i_class_fa_fa_file_code_o_i_span_a_href_https_icfi_github_io_openscap_aws_target_blank_rel_noopener_web_a"><span class="icon"><i class="fa fa-file-code-o"></i></span> <a href="https://icfi.github.io/openscap-aws/" target="_blank" rel="noopener">Web</a></a></li>
 <li><a href="#_span_class_icon_i_class_fa_fa_github_i_span_a_href_https_github_com_icfi_openscap_aws_target_blank_rel_noopener_source_a"><span class="icon"><i class="fa fa-github"></i></span> <a href="https://github.com/ICFI/openscap-aws" target="_blank" rel="noopener">Source</a></a></li>
 </ul>
 </li>
@@ -525,6 +525,16 @@ table.CodeRay td.code>pre{padding:0}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Security compliance is a state where computer systems are in line with a specific security policy</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; OpenSCAP project
+</div>
+</div>
 <div class="paragraph">
 <p><span class="image" style="float: left"><a class="image" href="https://www.icf.com?utm_source=architecture&amp;utm_medium=docs"><img src="images/logo.png" alt="Logo" width="150" height="150"></a></span><br></p>
 </div>
@@ -534,10 +544,25 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This project contains a bit of integration code that assists with managing OpenSCAP
-scans across a fleet of instances. The example integration contains an RPM built for CentOS 7 that will install OpenSCAP
-and all dependencies along with a <a href="https://www.open-scap.org/resources/documentation/customizing-scap-security-guide-for-your-use-case/">tailoring file</a>
-that allows you to adjust security policies the needs of your organization.</p>
+<p>This project contains integration code that assists with managing <a href="https://www.open-scap.org" target="_blank" rel="noopener">OpenSCAP</a> scans across a
+fleet of instances. The example deployment template automates the creation of a demonstration environment meant to show
+a working example of the automation process.</p>
+</div>
+<div class="paragraph">
+<p>The kay takeaways from this demonstration are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Automating compliance auditing is the only way to meet established goals at scale</p>
+</li>
+<li>
+<p>Customized organizational policies are supported through the user of a <a href="https://www.open-scap.org/resources/documentation/customizing-scap-security-guide-for-your-use-case/">tailoring file</a></p>
+</li>
+<li>
+<p>The publishing of metrics and failure events supports customized organizational processes and responses</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -572,8 +597,8 @@ yum -y install awscli openscap-aws</pre>
 <div class="sect2">
 <h3 id="_example">Example</h3>
 <div class="paragraph">
-<p>There is a CloudFormation template in the examples directory that can be used to demonstrate the capability. It will
-create 3 EC2 micro sized instances which cost about a cent per hour.</p>
+<p>There is a CloudFormation template in the examples directory that can be used to demonstrate the capability. The default
+settings will create 3 EC2 micro sized instances which each cost about a cent per hour.</p>
 </div>
 </div>
 <div class="sect2">
@@ -587,7 +612,7 @@ create 3 EC2 micro sized instances which cost about a cent per hour.</p>
 <p>Ensure you have both <code>make</code> and <code>docker</code> installed on your workstation</p>
 </li>
 <li>
-<p>Create an S3 bucket to hold you custom tailoring file and the RPM</p>
+<p>Create an S3 bucket to hold your custom tailoring file and the RPM</p>
 <div class="ulist">
 <ul>
 <li>
@@ -597,7 +622,7 @@ create 3 EC2 micro sized instances which cost about a cent per hour.</p>
 </div>
 </li>
 <li>
-<p>Run <code>make rpm</code> and upload the rpm file found in the src/rpm/RPMS/noarch directory</p>
+<p>Run <code>make rpm</code> and upload the rpm file found in the src/rpm/RPMS/noarch directory to your S3 bucket</p>
 <div class="ulist">
 <ul>
 <li>
@@ -619,7 +644,7 @@ add this RPM instead of uploading to your configuration S3 bucket</p>
 <h2 id="_documentation_links">Documentation Links</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_span_class_icon_i_class_fa_fa_file_code_o_i_span_a_href_https_icfi_github_io_openscap_aws_docs_html_target_blank_rel_noopener_web_a"><span class="icon"><i class="fa fa-file-code-o"></i></span> <a href="https://icfi.github.io/openscap-aws/docs.html" target="_blank" rel="noopener">Web</a></h3>
+<h3 id="_span_class_icon_i_class_fa_fa_file_code_o_i_span_a_href_https_icfi_github_io_openscap_aws_target_blank_rel_noopener_web_a"><span class="icon"><i class="fa fa-file-code-o"></i></span> <a href="https://icfi.github.io/openscap-aws/" target="_blank" rel="noopener">Web</a></h3>
 
 </div>
 <div class="sect2">
@@ -631,7 +656,7 @@ add this RPM instead of uploading to your configuration S3 bucket</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-01 19:05:24 UTC
+Last updated 2018-05-02 19:52:43 UTC
 </div>
 </div>
 </body>

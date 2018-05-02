@@ -4,7 +4,13 @@
 :icons: font
 :toc: left
 
-= OpenSCAP AWS
+= OpenSCAP on AWS
+
+[, OpenSCAP project]
+""
+Security compliance is a state where computer systems are in line with a specific security policy
+""
+
 ifdef::backend-pdf[]
 :title-logo-image: image:logo.png[500, 500, align="center"]
 endif::backend-pdf[]
@@ -15,10 +21,16 @@ endif::backend-html5[]
 
 == Overview
 
-This project contains a bit of integration code that assists with managing OpenSCAP
-scans across a fleet of instances. The example integration contains an RPM built for CentOS 7 that will install OpenSCAP
-and all dependencies along with a https://www.open-scap.org/resources/documentation/customizing-scap-security-guide-for-your-use-case/[tailoring file]
-that allows you to adjust security policies the needs of your organization.
+This project contains integration code that assists with managing https://www.open-scap.org[OpenSCAP^] scans across a
+fleet of instances. The example deployment template automates the creation of a demonstration environment meant to show
+a working example of the automation process.
+
+
+The kay takeaways from this demonstration are as follows:
+
+* Automating compliance auditing is the only way to meet established goals at scale
+* Customized organizational policies are supported through the user of a https://www.open-scap.org/resources/documentation/customizing-scap-security-guide-for-your-use-case/[tailoring file]
+* The publishing of metrics and failure events supports customized organizational processes and responses
 
 == Building
 
@@ -38,17 +50,17 @@ is the easiest method to install onto your servers.
 
 === Example
 
-There is a CloudFormation template in the examples directory that can be used to demonstrate the capability. It will
-create 3 EC2 micro sized instances which cost about a cent per hour.
+There is a CloudFormation template in the examples directory that can be used to demonstrate the capability. The default
+settings will create 3 EC2 micro sized instances which each cost about a cent per hour.
 
 === Setup
 
 Before deploying the CloudFormation template complete the following steps
 
 * Ensure you have both `make` and `docker` installed on your workstation
-* Create an S3 bucket to hold you custom tailoring file and the RPM
+* Create an S3 bucket to hold your custom tailoring file and the RPM
   ** Accept all the defaults and keep the bucket permissions set to private
-* Run `make rpm` and upload the rpm file found in the src/rpm/RPMS/noarch directory
+* Run `make rpm` and upload the rpm file found in the src/rpm/RPMS/noarch directory to your S3 bucket
   ** If you regularly manage your systems via RPM you might have a custom RPM repo already created into which you'd
      add this RPM instead of uploading to your configuration S3 bucket
 * Review, update and upload the tailoring file located in the /src/rpm/SOURCES directory into the S3 bucket
@@ -56,6 +68,6 @@ Before deploying the CloudFormation template complete the following steps
 == Documentation Links
 
 ifdef::backend-html5[]
-=== icon:file-code-o[] https://icfi.github.io/openscap-aws/docs.html[Web^]
+=== icon:file-code-o[] https://icfi.github.io/openscap-aws/[Web^]
 === icon:github[] https://github.com/ICFI/openscap-aws[Source^]
 endif::backend-html5[]
