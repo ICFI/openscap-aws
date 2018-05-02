@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/ICFI/openscap-aws/master/docs/images/project.svg)
+<img src="./images/project.svg">
 
 * **Website**: https://icfi.github.io/openscap-aws/
 * **Docs**: https://icfi.github.io/openscap-aws/docs.html
