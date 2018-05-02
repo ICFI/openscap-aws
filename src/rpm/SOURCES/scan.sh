@@ -22,21 +22,11 @@ source ${REPORT_DIR}/etc/openscap-aws.conf
 RESULTS_DATA_FILE=scan-xccdf-results.xml
 rm -f "${REPORT_DIR}/${RESULTS_DATA_FILE}"
 
-if [ -z "$TAILORING_FILE" ]; then
-    CUSTOMIZATION=
-elif [ "${TAILORING_FILE:0:5}" == "s3://" ]; then
-    install_check
-    aws s3 cp "$TAILORING_FILE" "${REPORT_DIR}/etc/"
-    CUSTOMIZATION="--tailoring-file ${REPORT_DIR}/etc/$(basename $TAILORING_FILE)"
-else
-    CUSTOMIZATION="--tailoring-file ${REPORT_DIR}/etc/$TAILORING_FILE"
-fi
-
 oscap xccdf eval --fetch-remote-resources "$@" \
     --profile $PROFILE \
     --results "${REPORT_DIR}/${RESULTS_DATA_FILE}" \
     --report "${REPORT_DIR}/$(hostname)-scap-report-$(date +%Y%m%d).html" \
-    $CUSTOMIZATION \
+    --tailoring-file "${REPORT_DIR}/etc/aws-cloud-tailored.xml" \
     "${REPORT_DIR}/etc/scap-security-guide-${SCAP_VERSION}/${DATA_STREAM}"
 
 SCORE=$(xmlstarlet sel -t -m "//_:Benchmark/_:TestResult" -v "_:score" "${REPORT_DIR}/${RESULTS_DATA_FILE}")
