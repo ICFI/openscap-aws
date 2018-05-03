@@ -20,7 +20,8 @@ source ${REPORT_DIR}/etc/openscap-aws.conf
 # Conduct a scan and get the score
 #
 RESULTS_DATA_FILE=scan-xccdf-results.xml
-rm -f "${REPORT_DIR}/${RESULTS_DATA_FILE}"
+# Clean up as these files are ~4MB each
+rm -f ${REPORT_DIR}/${RESULTS_DATA_FILE} ${REPORT_DIR}/*scap-report*.html
 
 oscap xccdf eval --fetch-remote-resources "$@" \
     --profile $PROFILE \
