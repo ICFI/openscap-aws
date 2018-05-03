@@ -505,7 +505,11 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_overview">Overview</a></li>
+<li><a href="#_overview">Overview</a>
+<ul class="sectlevel2">
+<li><a href="#_diagram">Diagram</a></li>
+</ul>
+</li>
 <li><a href="#_building">Building</a></li>
 <li><a href="#_deployment">Deployment</a>
 <ul class="sectlevel2">
@@ -563,6 +567,20 @@ a working example of the automation process.</p>
 <p>The publishing of metrics and failure events supports customized organizational processes and responses</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The folks at OpenSCAP/RedHat have a number of <a href="https://www.open-scap.org/tools/">additional tools</a> to manage servers at
+scale which can schedule and ingest scan result content. This project is meant to demonstrate lightweight alternative
+approaches with an emphasis on integration with AWS services.</p>
+</div>
+<div class="sect2">
+<h3 id="_diagram">Diagram</h3>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/architecture.png"><img src="images/architecture.png" alt="architecture"></a>
+</div>
+<div class="title">Figure 1. Example Architecture</div>
+</div>
 </div>
 </div>
 </div>
@@ -656,7 +674,7 @@ add this RPM instead of uploading to your configuration S3 bucket</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-02 19:52:43 UTC
+Last updated 2018-05-03 14:18:32 UTC
 </div>
 </div>
 </body>

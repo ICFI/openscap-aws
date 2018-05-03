@@ -32,6 +32,20 @@ The kay takeaways from this demonstration are as follows:
 * Customized organizational policies are supported through the user of a https://www.open-scap.org/resources/documentation/customizing-scap-security-guide-for-your-use-case/[tailoring file]
 * The publishing of metrics and failure events supports customized organizational processes and responses
 
+The folks at OpenSCAP/RedHat have a number of https://www.open-scap.org/tools/[additional tools] to manage servers at
+scale which can schedule and ingest scan result content. This project is meant to demonstrate lightweight alternative
+approaches with an emphasis on integration with AWS services.
+
+=== Diagram
+
+.Example Architecture
+ifdef::backend-pdf[]
+image::architecture.svg[pdfwidth=100%]
+endif::backend-pdf[]
+ifdef::backend-html5[]
+image::architecture.png[link=images/architecture.png]
+endif::backend-html5[]
+
 == Building
 
 The project includes a Makefile that automates the creation of the RPM using a Docker container. Docker
