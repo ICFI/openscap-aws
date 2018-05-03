@@ -42,5 +42,5 @@ instances.
     
 ### Example
 
-An example [CloudFormation deployment template](example/openscap-aws.yaml) is provided as a quick demo and for ideas as 
-to how you could integrate these concepts into your architecture.
+An example [CloudFormation deployment template](example/openscap-aws.yaml) is provided as a [quick demo](https://icfi.github.io/openscap-aws/docs.html#_setup) 
+and for ideas as to how you could integrate these concepts into your architecture.
