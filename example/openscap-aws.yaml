@@ -122,9 +122,9 @@ Resources:
     Type: 'AWS::SNS::Subscription'
     Condition: CreateSubscription
     Properties:
-      Subscription:
-        - Endpoint: !Ref NotificationEmail
-          Protocol: email
+      Endpoint: !Ref NotificationEmail
+      Protocol: email
+      TopicArn: !Ref NotificationTopic
 
   SecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
