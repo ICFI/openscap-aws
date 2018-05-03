@@ -109,10 +109,18 @@ Mappings:
     us-west-2:
       CENTOS7HVM: 'ami-0ebdd976'
 
+Conditions:
+
+  CreateSubscription: !Not [ !Equals [ !Ref NotificationEmail, '' ] ]
+
 Resources:
 
   NotificationTopic:
     Type: 'AWS::SNS::Topic'
+
+  NotificationTopicSubscription:
+    Type: 'AWS::SNS::Subscription'
+    Condition: CreateSubscription
     Properties:
       Subscription:
         - Endpoint: !Ref NotificationEmail
